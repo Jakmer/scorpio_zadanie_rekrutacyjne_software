@@ -52,4 +52,10 @@ add_library(map_generation src/map_generation.cpp)
 
 target_link_libraries(autonomy_simulator ${catkin_LIBRARIES} map_generation)
 
+add_executable(z2 src/z2/z2.cpp)
+
+target_link_libraries(z2
+  ${catkin_LIBRARIES}
+)
+
 add_subdirectory(test)
