@@ -2,6 +2,7 @@
 #include "autonomy_simulator/RoverPose.h"
 #include <iostream>
 #include <std_msgs/UInt8.h>
+#include "GoalSetter.hpp"
 
 class RoverMovePublisher
 {
@@ -48,9 +49,8 @@ int main(int argc, char **argv)
     ROS_WARN("Hello, this is a z2 node!");
     ROS_ERROR("Hello, this is a z2 node!");
 
-
-    RoverMovePublisher rmp{nh};
-    rmp.start();
+    GoalSetter gs{};
+    gs.run();
 
     return 0;
 }

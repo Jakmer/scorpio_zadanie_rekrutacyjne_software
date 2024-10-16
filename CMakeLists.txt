@@ -38,6 +38,7 @@ catkin_package(
 include_directories(
   ${catkin_INCLUDE_DIRS}
   include
+  src/GoalSetter
 )
 
 add_executable(autonomy_simulator
@@ -49,17 +50,17 @@ add_executable(autonomy_simulator
 add_dependencies(autonomy_simulator ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 add_library(map_generation src/map_generation.cpp)
+add_library(GoalSetter src/GoalSetter/GoalSetter.cpp)
 
 target_link_libraries(autonomy_simulator ${catkin_LIBRARIES} map_generation)
 
 add_executable(z2 src/z2/z2.cpp)
-
 target_link_libraries(z2
   ${catkin_LIBRARIES}
+  GoalSetter
 )
 
 add_executable(reader src/z2/reader.cpp)
-
 target_link_libraries(reader
   ${catkin_LIBRARIES}
 )
