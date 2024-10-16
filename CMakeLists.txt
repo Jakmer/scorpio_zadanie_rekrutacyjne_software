@@ -58,4 +58,10 @@ target_link_libraries(z2
   ${catkin_LIBRARIES}
 )
 
+add_executable(reader src/z2/reader.cpp)
+
+target_link_libraries(reader
+  ${catkin_LIBRARIES}
+)
+
 add_subdirectory(test)
