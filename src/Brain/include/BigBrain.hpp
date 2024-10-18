@@ -1,4 +1,3 @@
-
 #ifndef BIG_BRAIN
 #define BIG_BRAIN
 
@@ -9,11 +8,13 @@ using UInt8 = std_msgs::UInt8;
 class BigBrain : public BigBrainIfc
 {
 public:
-    BigBrain() = default;
+    BigBrain(std::shared_ptr<Pose> &posePtr, std::shared_ptr<Goal> &goalPtr);
     virtual ~BigBrain() = default;
 
 private:
-    UInt8 think(Pose &pose, Goal &goal) override;
+    virtual UInt8 think() override;
+    virtual bool validateMove(UInt8 &move) override;
+    bool isGoalReachable();
 };
 
 #endif // !BIG_BRAIN

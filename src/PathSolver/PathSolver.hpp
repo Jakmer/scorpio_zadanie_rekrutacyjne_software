@@ -8,6 +8,10 @@
 #include <std_msgs/UInt8.h>
 #include <optional>
 #include <mutex>
+#include <memory>
+
+using Pose = std::shared_ptr<autonomy_simulator::RoverPose>;
+using Goal = std::shared_ptr<autonomy_simulator::SetGoal>;
 
 class PathSolver
 {
@@ -22,8 +26,8 @@ private:
   ros::Subscriber poseSubscriber;
   ros::Subscriber goalSubscriber;
   ros::Timer moveTimer;
-  autonomy_simulator::RoverPose pose;
-  std::optional<autonomy_simulator::SetGoal> goal;
+  Pose pose;
+  std::optional<Goal> goal;
   std::mutex poseMutex;
 
   std_msgs::UInt8 solvePath();

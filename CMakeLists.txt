@@ -43,6 +43,7 @@ include_directories(
   include
   src/GoalSetter
   src/PathSolver
+  src/Brain
 )
 
 add_executable(autonomy_simulator
@@ -56,11 +57,16 @@ add_dependencies(autonomy_simulator ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin
 add_library(map_generation src/map_generation.cpp)
 add_library(GoalSetter src/GoalSetter/GoalSetter.cpp)
 add_library(PathSolver src/PathSolver/PathSolver.cpp)
+add_library(BrainLib
+  src/Brain/SmallBrain.cpp
+  src/Brain/BigBrain.cpp
+  src/Brain/BiggerBrain.cpp
+)
 
 target_link_libraries(autonomy_simulator ${catkin_LIBRARIES} map_generation)
 
 add_executable(goal_setter src/GoalSetter/gs_run.cpp)
-target_link_libraries( goal_setter
+target_link_libraries(goal_setter
   ${catkin_LIBRARIES}
   GoalSetter
 )
@@ -69,6 +75,7 @@ add_executable(path_solver src/PathSolver/ps_run.cpp)
 target_link_libraries(path_solver
   ${catkin_LIBRARIES}
   PathSolver
+  BrainLib
 )
 
 add_subdirectory(test)
