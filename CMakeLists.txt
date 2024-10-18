@@ -3,6 +3,8 @@ project(autonomy_simulator)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)   #  LSP needs this
 set(CMAKE_CXX_STANDARD 17)    # for some c++ libs (like optional)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS

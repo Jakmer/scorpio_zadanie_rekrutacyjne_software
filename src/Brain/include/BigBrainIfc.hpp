@@ -21,7 +21,7 @@ public:
         return think(); 
     }
 
-private:
+protected:
     virtual UInt8 think() = 0;
     virtual bool validateMove(UInt8 &move) = 0;
 
