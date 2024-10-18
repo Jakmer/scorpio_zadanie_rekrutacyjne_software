@@ -18,7 +18,7 @@ private:
     ros::Subscriber setGoalSubscriber;
     autonomy_simulator::SetGoal goal;
 
-    void setGoalCallback(const autonomy_simulator::SetGoal::ConstPtr& goal);
+    void setGoalCallback(const autonomy_simulator::SetGoal::ConstPtr &goal);
 };
 
 #endif

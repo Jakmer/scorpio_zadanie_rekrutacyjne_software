@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(autonomy_simulator)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)   #  LSP needs this
+set(CMAKE_CXX_STANDARD 17)    # for some c++ libs (like optional)
+
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
   message_generation
@@ -39,6 +42,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   include
   src/GoalSetter
+  src/PathSolver
 )
 
 add_executable(autonomy_simulator
@@ -51,18 +55,20 @@ add_dependencies(autonomy_simulator ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin
 
 add_library(map_generation src/map_generation.cpp)
 add_library(GoalSetter src/GoalSetter/GoalSetter.cpp)
+add_library(PathSolver src/PathSolver/PathSolver.cpp)
 
 target_link_libraries(autonomy_simulator ${catkin_LIBRARIES} map_generation)
 
-add_executable(z2 src/z2/z2.cpp)
-target_link_libraries(z2
+add_executable(goal_setter src/GoalSetter/gs_run.cpp)
+target_link_libraries( goal_setter
   ${catkin_LIBRARIES}
   GoalSetter
 )
 
-add_executable(reader src/z2/reader.cpp)
-target_link_libraries(reader
+add_executable(path_solver src/PathSolver/ps_run.cpp)
+target_link_libraries(path_solver
   ${catkin_LIBRARIES}
+  PathSolver
 )
 
 add_subdirectory(test)
