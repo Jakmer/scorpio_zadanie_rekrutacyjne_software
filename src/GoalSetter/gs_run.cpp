@@ -6,7 +6,7 @@
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "z2");
+    ros::init(argc, argv, "goal_setter");
 
     GoalSetter gs{};
     gs.run();
