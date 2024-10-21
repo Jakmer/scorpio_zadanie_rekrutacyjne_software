@@ -6,6 +6,7 @@
 #include <memory>
 #include <mutex>
 
+namespace ps{
 
 PathSolver::PathSolver() : poseMutex()
 {
@@ -39,25 +40,9 @@ void PathSolver::run()
 
 std_msgs::UInt8 PathSolver::solvePath()
 {
-  std_msgs::UInt8 direction;
-
   const std::lock_guard<std::mutex> lock(poseMutex);
-  if (pose->y < goal.value()->y)
-  {
-    direction.data = 2;
-    return direction;
-  }
-  if (pose->x < goal.value()->x)
-  {
-    if (pose->orientation == pose->ORIENTATION_NORTH)
-    {
-      direction.data = 1;
-      return direction;
-    }
-    direction.data = 2;
-    return direction;
-  }
-  return direction;
+
+  return brain->getBestMove();
 }
 
 bool PathSolver::isGoalReached()
@@ -78,6 +63,7 @@ void PathSolver::goalCallback(const autonomy_simulator::SetGoal::ConstPtr &goal_
   {
     ROS_INFO("Received goal: %d, %d", goal_msg->x, goal_msg->y);
     goal = std::make_shared<autonomy_simulator::SetGoal>(*goal_msg);
+    brain = SmallBrain(pose, goal.value());
   }
 }
 
@@ -91,3 +77,5 @@ void PathSolver::sendMove(const ros::TimerEvent &event)
   auto direction = solvePath();
   movePublisher.publish(direction);
 }
+}
+

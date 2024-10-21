@@ -8,7 +8,25 @@ SmallBrain::SmallBrain(std::shared_ptr<Pose> &posePtr, std::shared_ptr<Goal> &go
 
 UInt8 SmallBrain::think()
 {
-    return UInt8();
+  std_msgs::UInt8 direction;
+
+  if (pose->y < goal->y)
+  {
+    direction.data = 2;
+    return direction;
+  }
+  if (pose->x < goal->x)
+  {
+    if (pose->orientation == pose->ORIENTATION_NORTH)
+    {
+      direction.data = 1;
+      return direction;
+    }
+    direction.data = 2;
+    return direction;
+  }
+
+    return direction;
 }
 
 bool SmallBrain::validateMove(UInt8 &move)

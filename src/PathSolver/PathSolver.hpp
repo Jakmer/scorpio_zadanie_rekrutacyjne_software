@@ -3,12 +3,16 @@
 
 #include "autonomy_simulator/RoverPose.h"
 #include "autonomy_simulator/SetGoal.h"
+#include "SmallBrain.hpp"
 #include "ros/timer.h"
 #include <ros/ros.h>
 #include <std_msgs/UInt8.h>
 #include <optional>
 #include <mutex>
-#include <memory>
+
+
+namespace ps
+{
 
 using Pose = std::shared_ptr<autonomy_simulator::RoverPose>;
 using Goal = std::shared_ptr<autonomy_simulator::SetGoal>;
@@ -29,6 +33,7 @@ private:
   Pose pose;
   std::optional<Goal> goal;
   std::mutex poseMutex;
+  std::optional<SmallBrain> brain;
 
   std_msgs::UInt8 solvePath();
   void sendMove(const ros::TimerEvent &event);
@@ -36,5 +41,6 @@ private:
   void poseCallback(const autonomy_simulator::RoverPose::ConstPtr &pose_msg);
   void goalCallback(const autonomy_simulator::SetGoal::ConstPtr &goal_msg);
 };
+}
 
 #endif

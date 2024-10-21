@@ -45,7 +45,7 @@ include_directories(
   include
   src/GoalSetter
   src/PathSolver
-  src/Brain
+  src/Brain/include
 )
 
 add_executable(autonomy_simulator
