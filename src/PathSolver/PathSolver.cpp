@@ -70,7 +70,8 @@ void PathSolver::goalCallback(const autonomy_simulator::SetGoal::ConstPtr &goal_
   {
     ROS_INFO("Received goal: %d, %d", goal_msg->x, goal_msg->y);
     goal = std::make_shared<autonomy_simulator::SetGoal>(*goal_msg);
-    brain = SmallBrain(pose.value(), goal.value());
+    /*brain = SmallBrain(pose.value(), goal.value());*/
+    brain = BigBrain(pose.value(), goal.value(), nh);
   }
   else {
     ROS_INFO("Received goal: %d, %d", goal_msg->x, goal_msg->y);

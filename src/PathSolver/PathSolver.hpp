@@ -4,6 +4,7 @@
 #include "autonomy_simulator/RoverPose.h"
 #include "autonomy_simulator/SetGoal.h"
 #include "SmallBrain.hpp"
+#include "BigBrain.hpp"
 #include "ros/timer.h"
 #include <ros/ros.h>
 #include <std_msgs/UInt8.h>
@@ -33,7 +34,8 @@ private:
   std::optional<Pose> pose;
   std::optional<Goal> goal;
   std::mutex poseMutex;
-  std::optional<SmallBrain> brain;
+  /*std::optional<SmallBrain> brain;*/
+  std::optional<BigBrain> brain;
 
   std_msgs::UInt8 solvePath();
   void sendMove(const ros::TimerEvent &event);

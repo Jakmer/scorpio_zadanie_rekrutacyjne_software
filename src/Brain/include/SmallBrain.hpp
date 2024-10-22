@@ -3,7 +3,6 @@
 #define SMALL_BRAIN
 
 #include "BigBrainIfc.hpp"
-#include "SmallBrain.hpp" 
 
 using UInt8 = std_msgs::UInt8;
 

@@ -1,6 +1,6 @@
 <launch>
   <node name="autonomy_simulator" pkg="autonomy_simulator" type="autonomy_simulator" output="log" respawn="true">
-    <param name="generate_obstacles" value="false"/>
+    <param name="generate_obstacles" value="true"/>
   </node>
   <node name="goal_setter" pkg="autonomy_simulator" type="goal_setter" output="log" respawn="true">
   </node>
