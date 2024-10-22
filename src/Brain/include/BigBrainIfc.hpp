@@ -10,6 +10,13 @@ using UInt8 = std_msgs::UInt8;
 using Pose = autonomy_simulator::RoverPose;
 using Goal = autonomy_simulator::SetGoal;
 
+enum MoveCmd{
+  TURN_LEFT,
+  TURN_RIGHT,
+  GO_FORWARD,
+  GO_BACKWARD
+};
+
 class BigBrainIfc {
 public:
     BigBrainIfc(std::shared_ptr<Pose> &posePtr, std::shared_ptr<Goal> &goalPtr)
@@ -18,12 +25,19 @@ public:
     virtual ~BigBrainIfc() = default;
 
     UInt8 getBestMove() { 
-        return think(); 
+        auto bestMove = think();
+
+        if(validateMove(bestMove))
+          return bestMove; 
+        else 
+          // TODO! add "not validated move" handler
+          return bestMove;
     }
 
 protected:
     virtual UInt8 think() = 0;
     virtual bool validateMove(UInt8 &move) = 0;
+    virtual bool isGoalReachable() = 0;
 
     UInt8 prev_move;
     UInt8 fut_move;

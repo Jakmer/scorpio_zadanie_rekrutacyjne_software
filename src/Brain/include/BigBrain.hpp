@@ -14,7 +14,7 @@ public:
 private:
     virtual UInt8 think() override;
     virtual bool validateMove(UInt8 &move) override;
-    bool isGoalReachable();
+    virtual bool isGoalReachable() override;
 };
 
 #endif // !BIG_BRAIN

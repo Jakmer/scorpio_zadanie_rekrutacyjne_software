@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "path_solver");
 
-    std::unique_ptr<PathSolver> solver = std::make_unique<PathSolver>();
+    std::unique_ptr<ps::PathSolver> solver = std::make_unique<ps::PathSolver>();
     solver->run();
 
     ros::spin();

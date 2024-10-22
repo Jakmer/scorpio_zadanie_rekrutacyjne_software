@@ -16,3 +16,9 @@ bool BigBrain::validateMove(UInt8 &move)
 {
   return true;
 }
+
+bool BigBrain::isGoalReachable()
+{
+  return true;
+}
+
