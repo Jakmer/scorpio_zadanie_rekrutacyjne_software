@@ -42,5 +42,14 @@ bool BigBrain::isGoalReachable()
 
 void BigBrain::preprocessMap()
 {
-    graph->printGraph(); 
+    /*graph->printGraph(); */
+    auto moves = graph->getShortestPath(*pose, *goal);
+
+    ROS_INFO("Printing moves: ");
+    for(const auto &move : moves)
+    {
+        std::cout<<move<<" ";
+    }
+  
+    std::cout<<std::endl;
 }
