@@ -41,20 +41,27 @@ void PathSolver::run()
 std_msgs::UInt8 PathSolver::solvePath()
 {
   const std::lock_guard<std::mutex> lock(poseMutex);
-
-  return brain->getBestMove();
+  auto best_move = brain->getBestMove();
+  return best_move;
 }
 
 bool PathSolver::isGoalReached()
 {
   const std::lock_guard<std::mutex> lock(poseMutex);
-  return pose->x == goal.value()->x && pose->y == goal.value()->y;
+  return pose.value()->x == goal.value()->x && pose.value()->y == goal.value()->y;
 }
 
 void PathSolver::poseCallback(const autonomy_simulator::RoverPose::ConstPtr &pose_msg)
 {
   const std::lock_guard<std::mutex> lock(poseMutex);
-  pose = std::make_shared<autonomy_simulator::RoverPose>(*pose_msg);
+  if(!pose.has_value())
+    pose = std::make_shared<autonomy_simulator::RoverPose>(*pose_msg);
+  else
+  {
+    pose.value()->x = pose_msg->x;
+    pose.value()->y = pose_msg->y;
+    pose.value()->orientation = pose_msg->orientation;
+  }
 }
 
 void PathSolver::goalCallback(const autonomy_simulator::SetGoal::ConstPtr &goal_msg)
@@ -63,19 +70,32 @@ void PathSolver::goalCallback(const autonomy_simulator::SetGoal::ConstPtr &goal_
   {
     ROS_INFO("Received goal: %d, %d", goal_msg->x, goal_msg->y);
     goal = std::make_shared<autonomy_simulator::SetGoal>(*goal_msg);
-    brain = SmallBrain(pose, goal.value());
+    brain = SmallBrain(pose.value(), goal.value());
+  }
+  else {
+    ROS_INFO("Received goal: %d, %d", goal_msg->x, goal_msg->y);
+    goal.value()->x = goal_msg->x; 
+    goal.value()->y = goal_msg->y; 
   }
 }
 
 void PathSolver::sendMove(const ros::TimerEvent &event)
 {
-  if (isGoalReached())
+  if (!isGoalReached())
   {
-    return;
+      auto direction = solvePath();
+      if(direction.data == MoveCmd::GOAL_REACHED)
+      {
+          ROS_INFO("Rover reached the goal");
+          return;
+      }
+      movePublisher.publish(direction);
     // moveTimer.stop(); // actually I leave it commented bc it works pretty well when goal changes
   }
-  auto direction = solvePath();
-  movePublisher.publish(direction);
+  else {
+    ROS_INFO("Rover reached the goal");
+    return;
+  }
 }
 }
 

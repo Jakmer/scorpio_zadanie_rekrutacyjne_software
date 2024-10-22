@@ -16,9 +16,7 @@ UInt8 SmallBrain::think()
   }
 
   if(pose->y == goal->y && pose->x == goal->x){
-      // TODO! create special command (add it to enum) that will handle "reach goal" scenario
-      // currently let rover spinning arround xD
-      direction.data = MoveCmd::TURN_RIGHT;
+      direction.data = MoveCmd::GOAL_REACHED;
       return direction;
   }
 
@@ -33,7 +31,7 @@ UInt8 SmallBrain::think()
       }
       else if(pose->orientation == autonomy_simulator::RoverPose::ORIENTATION_SOUTH)
       {
-        direction.data = MoveCmd::TURN_RIGHT;
+        direction.data = MoveCmd::TURN_LEFT;
         return direction;
       }
     }
@@ -41,12 +39,12 @@ UInt8 SmallBrain::think()
     {
       if(pose->orientation == autonomy_simulator::RoverPose::ORIENTATION_NORTH)
       {
-        direction.data = MoveCmd::TURN_LEFT;
+        direction.data = MoveCmd::TURN_RIGHT;
         return direction;
       }
       else if(pose->orientation == autonomy_simulator::RoverPose::ORIENTATION_SOUTH)
       {
-        direction.data = MoveCmd::TURN_RIGHT;
+        direction.data = MoveCmd::TURN_LEFT;
         return direction;
       }
     }
@@ -105,12 +103,14 @@ UInt8 SmallBrain::think()
           return direction;
         break;
       case autonomy_simulator::RoverPose::ORIENTATION_SOUTH:
-          return direction;
           direction.data = MoveCmd::GO_BACKWARD;
+          return direction;
         break;
+    }
   }
 
   if(pose->x > goal->x)
+  {
     switch (pose->orientation) {
       case autonomy_simulator::RoverPose::ORIENTATION_WEST:
             direction.data = MoveCmd::GO_FORWARD;
@@ -122,7 +122,7 @@ UInt8 SmallBrain::think()
         break;
     }
   }
-  else if(pose->x > goal->x){
+  else if(pose->x < goal->x){
     switch (pose->orientation) {
       case autonomy_simulator::RoverPose::ORIENTATION_WEST:
             direction.data = MoveCmd::GO_BACKWARD;

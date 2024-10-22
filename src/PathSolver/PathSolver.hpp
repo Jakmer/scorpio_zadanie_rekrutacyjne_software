@@ -30,7 +30,7 @@ private:
   ros::Subscriber poseSubscriber;
   ros::Subscriber goalSubscriber;
   ros::Timer moveTimer;
-  Pose pose;
+  std::optional<Pose> pose;
   std::optional<Goal> goal;
   std::mutex poseMutex;
   std::optional<SmallBrain> brain;

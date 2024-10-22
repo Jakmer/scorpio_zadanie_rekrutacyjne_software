@@ -14,7 +14,8 @@ enum MoveCmd{
   TURN_LEFT,
   TURN_RIGHT,
   GO_FORWARD,
-  GO_BACKWARD
+  GO_BACKWARD,
+  GOAL_REACHED
 };
 
 class BigBrainIfc {

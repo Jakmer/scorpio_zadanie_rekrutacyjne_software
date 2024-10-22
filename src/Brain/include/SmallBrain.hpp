@@ -2,7 +2,8 @@
 #ifndef SMALL_BRAIN
 #define SMALL_BRAIN
 
-#include "BigBrainIfc.hpp" 
+#include "BigBrainIfc.hpp"
+#include "SmallBrain.hpp" 
 
 using UInt8 = std_msgs::UInt8;
 
@@ -15,7 +16,7 @@ public:
 private:
     virtual UInt8 think() override;
     virtual bool validateMove(UInt8 &move) override;
-    bool isGoalReachable();
+    virtual bool isGoalReachable() override;
 };
 
 #endif // !SMALL_BRAIN
